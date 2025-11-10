@@ -1,0 +1,10 @@
+compile boot.asm 
+nasm -f bin boot.asm -o boot.bin
+compile kernel.asm
+nasm -f bin kernel.asm -o kernel.bin
+
+merging files
+copy /b boot.bin + kernel.bin os.bin
+
+launch in qemu
+qemu-system-x86_64 -fda os.bin
