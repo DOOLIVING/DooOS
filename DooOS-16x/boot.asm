@@ -3,6 +3,7 @@ bits 16
 
 start:
     jmp 0x0000:main
+
 main:
     xor ax, ax
     mov ds, ax
@@ -14,22 +15,20 @@ main:
     mov ax, 0x0003
     int 0x10
 
-    ; Сообщение
     mov si, loading_msg
     call print_string
 
-    ; Загрузка ядра (8 секторов)
+    ; Загрузка ядра (32 сектора = 16KB)
     mov ah, 0x02
-    mov al, 8        ; 8 секторов
-    mov ch, 0        ; cylinder 0
-    mov cl, 2        ; sector 2
-    mov dh, 0        ; head 0
-    mov dl, 0        ; drive 0
-    mov bx, 0x7E00   ; load to 0x7E00
+    mov al, 32
+    mov ch, 0
+    mov cl, 2
+    mov dh, 0
+    mov dl, 0
+    mov bx, 0x7E00
     int 0x13
     jc error
 
-    ; Переход к ядру
     jmp 0x7E00
 
 error:
